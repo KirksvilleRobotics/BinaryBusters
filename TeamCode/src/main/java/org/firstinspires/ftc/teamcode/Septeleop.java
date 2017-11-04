@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -11,7 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * Created by BinaryBusters on 9/25/17.
  */
-
+@TeleOp(name = "Septeleop")
 public class Septeleop extends OpMode {
 
     public DcMotor backRightMotor;
@@ -22,7 +23,7 @@ public class Septeleop extends OpMode {
     public DcMotor glyphVertical;
     public Servo glyphHorizontal;
 
-    public DcMotor relicHorizontal;
+    //public DcMotor relicHorizontal;
 
     public ElapsedTime currentTime = new ElapsedTime();
 
@@ -48,9 +49,9 @@ public class Septeleop extends OpMode {
         glyphVertical.setDirection(DcMotor.Direction.FORWARD);
         glyphHorizontal.setPosition(0);
 
-        relicHorizontal = hardwareMap.get(DcMotor.class, "relicHorizontal");
+        //relicHorizontal = hardwareMap.get(DcMotor.class, "relicHorizontal");
 
-        relicHorizontal.setDirection(DcMotor.Direction.FORWARD);
+        //relicHorizontal.setDirection(DcMotor.Direction.FORWARD);
     }
 
     @Override
@@ -64,13 +65,11 @@ public class Septeleop extends OpMode {
         double leftPower;
         double rightPower;
 
-        double drive = -gamepad1.left_stick_y;
-        double turn  =  gamepad1.right_stick_x;
-        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+        leftPower = -gamepad1.left_stick_y;
+        rightPower = gamepad1.right_stick_y;
 
-        backLeftMotor.setPower(leftPower);
-        backRightMotor.setPower(rightPower);
+        backLeftMotor.setPower(leftPower * 0.8);
+        backRightMotor.setPower(rightPower * 0.8);
 
         /* Mecanum Wheel Code
         double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
@@ -87,44 +86,23 @@ public class Septeleop extends OpMode {
         backLeftMotor.setPower(v3);
         backRightMotor.setPower(v4); */
 
-        if(gamepad1.left_stick_y == 0 && gamepad1.left_stick_x == 0) stop();
-
-        //Glyph code
+        //Glyph code - The mechanism that lifts the glyphs
         //Glyph Vertical
-        if(gamepad1.dpad_up == true) moveGlyphVertical(1);
-        if(gamepad1.dpad_down == true) moveGlyphVertical(-1);
+        if (gamepad1.dpad_up) glyphVertical.setPower(-1); //up
+        if (gamepad1.dpad_down) glyphVertical.setPower(1); //down
+        if (gamepad1.dpad_down == false && gamepad1.dpad_up == false) glyphVertical.setPower(0);
 
         //Glyph Horizontal
-        //Open claw
-        if(gamepad2.x == true) moveGlyphHorizontal(1);
-        //Close Claw
-        if(gamepad2.y == true) moveGlyphHorizontal(0);
-
+        //The following is code to control the opening and closing of the glyph lift claw on controller 2.
+        //There are four values to test various positions, but we will only want 2 long-term.
+        if (gamepad2.y) glyphHorizontal.setPosition(180);
+        if (gamepad2.x) glyphHorizontal.setPosition(120);
+        if (gamepad2.b) glyphHorizontal.setPosition(60);
+        if (gamepad2.a) glyphHorizontal.setPosition(0);
         //Relic Code
         //Out
-        if(gamepad2.a == true) moveRelic(1);
+        //if (gamepad2.a == true) relicHorizontal.setPower(1);
         //In
-        if(gamepad2.b == true) moveRelic(-1);
-    }
-
-    public void stop() {
-        //Mecanum Wheel
-        //frontLeftMotor.setPower(0);
-        //frontRightMotor.setPower(0);
-
-        backLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
-    }
-
-    public void moveGlyphVertical(int direction) {
-        glyphVertical.setPower(direction);
-    }
-
-    public void moveGlyphHorizontal(int direction) {
-        glyphVertical.setTargetPosition(direction);
-    }
-
-    public void moveRelic(int direction) {
-        relicHorizontal.setPower(direction);
+        //if (gamepad2.b == true) relicHoriztontal.setPower(-1);
     }
 }
