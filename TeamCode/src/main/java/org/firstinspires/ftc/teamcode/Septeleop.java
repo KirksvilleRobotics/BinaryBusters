@@ -21,7 +21,7 @@ public class Septeleop extends OpMode {
     //public DcMotor frontLeftMotor;
 
     public DcMotor glyphVertical;
-    public Servo glyphHorizontal;
+    public DcMotor glyphHorizontal;
 
     //public DcMotor relicHorizontal;
 
@@ -44,10 +44,10 @@ public class Septeleop extends OpMode {
         //frontLeftMotor.setDirection((DcMotor.Direction.FORWARD));
 
         glyphVertical = hardwareMap.get(DcMotor.class, "glyphVertical");
-        glyphHorizontal = hardwareMap.get(Servo.class, "glyphHorizontal");
+        glyphHorizontal = hardwareMap.get(DcMotor.class, "glyphHorizontal");
 
         glyphVertical.setDirection(DcMotor.Direction.FORWARD);
-        glyphHorizontal.setPosition(0);
+        glyphHorizontal.setDirection(DcMotor.Direction.FORWARD);
 
         //relicHorizontal = hardwareMap.get(DcMotor.class, "relicHorizontal");
 
@@ -88,17 +88,10 @@ public class Septeleop extends OpMode {
 
         //Glyph code - The mechanism that lifts the glyphs
         //Glyph Vertical
-        if (gamepad1.dpad_up) glyphVertical.setPower(-1); //up
-        if (gamepad1.dpad_down) glyphVertical.setPower(1); //down
-        if (gamepad1.dpad_down == false && gamepad1.dpad_up == false) glyphVertical.setPower(0);
+        glyphVertical.setPower(gamepad2.left_stick_y);
 
         //Glyph Horizontal
-        //The following is code to control the opening and closing of the glyph lift claw on controller 2.
-        //There are four values to test various positions, but we will only want 2 long-term.
-        if (gamepad2.y) glyphHorizontal.setPosition(180);
-        if (gamepad2.x) glyphHorizontal.setPosition(120);
-        if (gamepad2.b) glyphHorizontal.setPosition(60);
-        if (gamepad2.a) glyphHorizontal.setPosition(0);
+        glyphHorizontal.setPower(gamepad2.right_stick_x);
         //Relic Code
         //Out
         //if (gamepad2.a == true) relicHorizontal.setPower(1);

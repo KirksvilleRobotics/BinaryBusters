@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
  * Created by yearbook on 10/11/17.
  */
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,7 +14,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-
+@Autonomous(name = "BinaryBustersAutonomus")
 public class BinaryBustersAutonomus extends LinearOpMode{
     public DcMotor backRightMotor;
     public DcMotor backLeftMotor;
@@ -26,9 +27,9 @@ public class BinaryBustersAutonomus extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {
         setUp();
-        backRightMotor.setPower(0.8);
+        backRightMotor.setPower(-0.8);
         backLeftMotor.setPower(0.8);
-        sleep(1000);
+        sleep(800);
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
     }
