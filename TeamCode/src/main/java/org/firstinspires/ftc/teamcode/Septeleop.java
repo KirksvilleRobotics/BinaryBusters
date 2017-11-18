@@ -17,11 +17,9 @@ public class Septeleop extends OpMode {
 
     public DcMotor backRightMotor;
     public DcMotor backLeftMotor;
-    //public DcMotor frontRightMotor;
-    //public DcMotor frontLeftMotor;
 
     public DcMotor glyphVertical;
-    public DcMotor glyphHorizontal;
+    public Servo glyphHorizontal;
 
     //public DcMotor relicHorizontal;
 
@@ -32,22 +30,14 @@ public class Septeleop extends OpMode {
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
         backLeftMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
 
-        //Mecanum
-        //frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
-        //frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeftMotor");
-
         backRightMotor.setDirection(DcMotor.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        //Mecanum
-        //frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
-        //frontLeftMotor.setDirection((DcMotor.Direction.FORWARD));
-
         glyphVertical = hardwareMap.get(DcMotor.class, "glyphVertical");
-        glyphHorizontal = hardwareMap.get(DcMotor.class, "glyphHorizontal");
+        glyphHorizontal = hardwareMap.get(Servo.class, "glyphHorizontal");
 
         glyphVertical.setDirection(DcMotor.Direction.FORWARD);
-        glyphHorizontal.setDirection(DcMotor.Direction.FORWARD);
+        glyphHorizontal.setPosition(0);
 
         //relicHorizontal = hardwareMap.get(DcMotor.class, "relicHorizontal");
 
@@ -71,31 +61,13 @@ public class Septeleop extends OpMode {
         backLeftMotor.setPower(leftPower * 0.8);
         backRightMotor.setPower(rightPower * 0.8);
 
-        /* Mecanum Wheel Code
-        double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-        double angle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI /4;
-        double rightX = gamepad1.right_stick_x;
-
-        final double v1 = r * Math.cos(angle) + rightX;
-        final double v2 = r * Math.sin(angle) - rightX;
-        final double v3 = r * Math.sin(angle) + rightX;
-        final double v4 = r * Math.cos(angle) - rightX;
-
-        frontLeftMotor.setPower(v1);
-        frontRightMotor.setPower(v2);
-        backLeftMotor.setPower(v3);
-        backRightMotor.setPower(v4); */
-
         //Glyph code - The mechanism that lifts the glyphs
         //Glyph Vertical
         glyphVertical.setPower(gamepad2.left_stick_y);
 
         //Glyph Horizontal
-        glyphHorizontal.setPower(gamepad2.right_stick_x);
+        if(gamepad2.x) glyphHorizontal.setPosition(90);
+        if(gamepad2.y) glyphHorizontal.setPosition(0);
         //Relic Code
-        //Out
-        //if (gamepad2.a == true) relicHorizontal.setPower(1);
-        //In
-        //if (gamepad2.b == true) relicHoriztontal.setPower(-1);
     }
 }

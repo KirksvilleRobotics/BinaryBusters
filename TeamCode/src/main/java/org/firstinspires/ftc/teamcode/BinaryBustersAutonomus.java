@@ -23,6 +23,7 @@ public class BinaryBustersAutonomus extends LinearOpMode{
     public Servo glyphHorizontal;
 
     public DcMotor relicHorizontal;
+    public Servo jewel;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -46,5 +47,8 @@ public class BinaryBustersAutonomus extends LinearOpMode{
 
         glyphVertical.setDirection(DcMotor.Direction.FORWARD);
         glyphHorizontal.setPosition(0);
+
+        jewel = hardwareMap.get(Servo.class, "jewel");
+        jewel.setPosition(0);
     }
 }
