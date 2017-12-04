@@ -20,19 +20,53 @@ public class BinaryBustersAutonomus extends LinearOpMode{
     public DcMotor backLeftMotor;
 
     public DcMotor glyphVertical;
-    public Servo glyphHorizontal;
 
-    public DcMotor relicHorizontal;
     public Servo jewel;
 
-    @Override
+    public int direction;
+
     public void runOpMode() throws InterruptedException {
-        setUp();
         backRightMotor.setPower(-0.8);
         backLeftMotor.setPower(0.8);
         sleep(800);
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
+        /*
+        jewel.setPosition(0);
+        direction = checkColor();
+        if(direction == -1) {
+            backRightMotor.setPower(0.8);
+            backLeftMotor.setPower(-0.8);
+        } else if(direction == 1) {
+            backRightMotor.setPower(-0.8);
+            backLeftMotor.setPower(0.8);
+        }
+        jewel.setPosition(90);
+
+        backRightMotor.setPower(-0.8);
+        backLeftMotor.setPower(0.8);
+        while(true) {
+            if(ultrasonicSensor < 3) {
+                backRightMotor.setPower(0);
+                backLeftMotor.setPower(0);
+                break;
+            }
+        }
+        */
+    }
+
+    public int checkColor() {
+        //check color in front of the robot
+        /*
+        read sensor
+        color = readSensor
+        if(color  == teamColor) {
+            return -1;
+        } else {
+            return 1;
+        }
+        */
+        return 0;
     }
 
     public void setUp() {
@@ -43,10 +77,8 @@ public class BinaryBustersAutonomus extends LinearOpMode{
         backLeftMotor.setDirection(DcMotor.Direction.FORWARD);
 
         glyphVertical = hardwareMap.get(DcMotor.class, "glyphVertical");
-        glyphHorizontal = hardwareMap.get(Servo.class, "glyphHorizontal");
 
         glyphVertical.setDirection(DcMotor.Direction.FORWARD);
-        glyphHorizontal.setPosition(0);
 
         jewel = hardwareMap.get(Servo.class, "jewel");
         jewel.setPosition(0);
