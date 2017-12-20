@@ -5,22 +5,24 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public class BBBlue extends BinaryBustersAutonomus {
-    public int direction;
+    double color;
 
     @Override
     public void runOpMode() {
         setUp();
 
-        jewel.setPosition(0);
-        direction = checkColor();
-        if(direction == -1) {
+        //jewel.setPosition(0);
+        color = checkColor();
+        if(color > 200) {
+            //color blue
+            //ddrive backwards
             backRightMotor.setPower(0.8);
             backLeftMotor.setPower(-0.8);
-        } else if(direction == 1) {
+        } else if(color > 1 && color < 10) {
             backRightMotor.setPower(-0.8);
             backLeftMotor.setPower(0.8);
         }
-        jewel.setPosition(90);
+        //jewel.setPosition(90);
 
         backRightMotor.setPower(0.8);
         backLeftMotor.setPower(-0.8);

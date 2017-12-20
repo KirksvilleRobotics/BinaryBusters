@@ -38,6 +38,9 @@ public class Septeleop extends OpMode {
         backRightMotor.setDirection(DcMotor.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotor.Direction.FORWARD);
 
+        backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         glyphVertical = hardwareMap.get(DcMotor.class, "glyphVertical");
 
         glyphVertical.setDirection(DcMotor.Direction.FORWARD);
@@ -80,8 +83,8 @@ public class Septeleop extends OpMode {
         if(ClawMode==1) glyphHorizontal.setPower(-.13);
         if(ClawMode==0) glyphHorizontal.setPower(0.25 * ClawPower);*/
 
-        glyphLeft.setPower(gamepad2.right_stick_x);
-        glyphRight.setPower(-gamepad2.right_stick_x);
+        glyphLeft.setPower(0.5 * gamepad2.right_stick_x);
+        glyphRight.setPower(-0.5 * gamepad2.right_stick_x);
 
         //Relic Code
         //if(gamepad2.a) relicHorizontal.setPower(1);
