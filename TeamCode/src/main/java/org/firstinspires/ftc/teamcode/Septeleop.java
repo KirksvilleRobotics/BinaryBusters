@@ -20,15 +20,15 @@ public class Septeleop extends OpMode {
 
     public DcMotor glyphVertical;
 
-    public DcMotor glyphLeft;
-    public DcMotor glyphRight;
+    public Servo glyphLeft;
+    public Servo glyphRight;
 
     //public DcMotor relicHorizontal;
+    //public Servo relicGrab;
+
+    //public Servo jewel;
 
     public ElapsedTime currentTime = new ElapsedTime();
-
-    int ClawMode = -1;
-    double ClawPower;
 
     @Override
     public void init() {
@@ -45,16 +45,16 @@ public class Septeleop extends OpMode {
 
         glyphVertical.setDirection(DcMotor.Direction.FORWARD);
 
-        glyphLeft = hardwareMap.get(DcMotor.class, "glyphLeft");
-        glyphRight = hardwareMap.get(DcMotor.class, "glyphRight");
-
-        glyphLeft.setDirection(DcMotor.Direction.FORWARD);
-        glyphRight.setDirection(DcMotor.Direction.FORWARD);
-
+        glyphLeft = hardwareMap.get(Servo.class, "glyphLeft");
+        glyphRight = hardwareMap.get(Servo.class, "glyphRight");
 
         //relicHorizontal = hardwareMap.get(DcMotor.class, "relicHorizontal");
+        //relicGrab = hardwareMap.get(Servo.class, "relicGrab");
 
         //relicHorizontal.setDirection(DcMotor.Direction.FORWARD);
+        //relicGrab.setPosition(0);
+
+        //jewel = hardwareMap.get(Servo.class, "jewel");
     }
 
     @Override
@@ -77,16 +77,18 @@ public class Septeleop extends OpMode {
         glyphVertical.setPower(gamepad2.left_stick_y);
 
         //Glyph Horizontal
-        /*ClawPower = gamepad2.right_stick_y;
-        if(gamepad2.x) ClawMode = 1;
-        if(gamepad2.y) ClawMode =0;
-        if(ClawMode==1) glyphHorizontal.setPower(-.13);
-        if(ClawMode==0) glyphHorizontal.setPower(0.25 * ClawPower);*/
+        if(gamepad2.x) {
+          //open
+          glyphLeft.setPosition(0);
+          glyphRight.setPosition(110);
+        }
+        if(gamepad2.y) {
+          //close
+          glyphLeft.setPosition(45);
+          glyphRight.setPosition(45);
+        }
 
-        glyphLeft.setPower(0.5 * gamepad2.right_stick_x);
-        glyphRight.setPower(-0.5 * gamepad2.right_stick_x);
 
         //Relic Code
-        //if(gamepad2.a) relicHorizontal.setPower(1);
     }
 }

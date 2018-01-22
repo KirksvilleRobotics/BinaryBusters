@@ -15,45 +15,39 @@ public class BBRed extends BinaryBustersAutonomus {
     public void runOpMode() {
 
 
-        setUp();
+        setup();
         telemetry.addData("Status:", "initiated");
         telemetry.update();
-        sleep(1000);
-        encoderDrive(36, 36);
-        /*
-        //jewel.setPosition(0);
-        //direction = checkColor(teamColor);
-        telemetry.addData("Ready to test", 1);
-        telemetry.update();
+        waitForStart();
+
+        dropJewel();
         color = checkColor();
-        sleep(1000);
-        if(color > 1 && color < 10) {
+        if(color == 1) {
             //color red
             //drive backwards
-            backRightMotor.setPower(0.8);
-            backLeftMotor.setPower(-0.8);
+            encoderDrive(4.0, 4.0, -1.0);
             telemetry.addData("color: ", "red");
             telemetry.update();
-        } else if(color > 200) {
+
+            liftJewel();
+
+            //drive to safe zone
+            encoderDrive(28.0 ,28.0, -1.0);
+        } else if(color == 0) {
             //color blue
             //drive forwards
-            backRightMotor.setPower(-0.8);
-            backLeftMotor.setPower(0.8);
+            encoderDrive(4.0, 4.0, 1);
             telemetry.addData("color: ", "blue");
             telemetry.update();
-        }
-        sleep(3000);
-        //jewel.setPosition(90);
 
-        //drive backwards
-        //backRightMotor.setPower(-0.8);
-        //backLeftMotor.setPower(0.8);
-        /*while(true) {
-            if(encoderValue is where we want it) {
-                backRightMotor.setPower(0);
-                backLeftMotor.setPower(0);
-                break;
-            }
-        }*/
+            liftJewel();
+
+            //drive to safe zone
+            encoderDrive(36.0, 36.0, -1.0);
+        } else {
+            liftJewel();
+
+            encoderDrive(36.0, 36.0, -1.0);
+        }
     }
 }
