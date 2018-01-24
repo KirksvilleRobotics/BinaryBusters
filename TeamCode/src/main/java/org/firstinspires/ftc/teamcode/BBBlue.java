@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 /**
- * Created by yearbook on 12/4/17.
+ * Created by BinaryBusters on 12/4/17.
  */
 @Autonomous(name = "BBBlue")
 public class BBBlue extends BinaryBustersAutonomus {

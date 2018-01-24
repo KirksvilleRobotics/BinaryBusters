@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 /**
- * Created by yearbook on 10/11/17.
+ * Created by BinaryBusters on 10/11/17.
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -24,6 +24,7 @@ public class BinaryBustersAutonomus extends LinearOpMode{
     public DcMotor backLeftMotor;
 
     public DcMotor jewelLift;
+    public Servo jewelLock;
 
     public ColorSensor colorSensor;
 
@@ -83,21 +84,20 @@ public class BinaryBustersAutonomus extends LinearOpMode{
     }
 
     public void dropJewel() {
-      jewelLift.setPower(-1.0);
-      sleep(1000);
-      jewelLift.setPower(1.0);
+        jewelLock.setPosition(0);
 
-      telemetry.addData("Jewel Position:", "down");
-      telemetry.update();
+        telemetry.addData("Jewel Position:", "down");
+        telemetry.update();
     }
 
     public void liftJewel() {
-      jewelLift.setPower(1.0);
-      sleep(1000);
-      jewelLift.setPower(-1.0);
+        jewelLift.setPower(1.0);
+        sleep(1000);
+        jewelLift.setPower(-1.0);
+        jewelLock.setPosition(1);
 
-      telemetry.addData("Jewel Position:", "up");
-      telemetry.update();
+        telemetry.addData("Jewel Position:", "up");
+        telemetry.update();
     }
 
     public void setup() {
@@ -115,7 +115,9 @@ public class BinaryBustersAutonomus extends LinearOpMode{
 
         jewelLift = hardwareMap.get(DcMotor.class, "jewelLift");
         jewelLift.setDirection(DcMotor.Direction.FORWARD);
+        jewelLock = hardwareMap.get(Servo.class, "jewelLock");
 
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        colorSensor.enableLed(false);
     }
 }

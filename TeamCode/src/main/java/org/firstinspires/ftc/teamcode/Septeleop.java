@@ -23,10 +23,8 @@ public class Septeleop extends OpMode {
     public Servo glyphLeft;
     public Servo glyphRight;
 
-    //public DcMotor relicHorizontal;
-    //public Servo relicGrab;
-
-    //public Servo jewel;
+    public DcMotor jewelLift;
+    public Servo jewelLock;
 
     public ElapsedTime currentTime = new ElapsedTime();
 
@@ -48,17 +46,14 @@ public class Septeleop extends OpMode {
         glyphLeft = hardwareMap.get(Servo.class, "glyphLeft");
         glyphRight = hardwareMap.get(Servo.class, "glyphRight");
 
-        //relicHorizontal = hardwareMap.get(DcMotor.class, "relicHorizontal");
-        //relicGrab = hardwareMap.get(Servo.class, "relicGrab");
+        jewelLift = hardwareMap.get(DcMotor.class, "jewelLift");
+        jewelLift.setDirection(DcMotor.Direction.FORWARD);
 
-        //relicHorizontal.setDirection(DcMotor.Direction.FORWARD);
-        //relicGrab.setPosition(0);
-
-        //jewel = hardwareMap.get(Servo.class, "jewel");
+        jewelLock = hardwareMap.get(Servo.class, "jewelLock");
     }
 
     @Override
-    public void start() {currentTime.reset();}
+    public void start() {}
 
     @Override
     public void loop() {
@@ -79,16 +74,22 @@ public class Septeleop extends OpMode {
         //Glyph Horizontal
         if(gamepad2.x) {
           //open
-          glyphLeft.setPosition(0);
-          glyphRight.setPosition(110);
+          glyphLeft.setPosition(0.0);
+          glyphRight.setPosition(0.6);
         }
         if(gamepad2.y) {
           //close
-          glyphLeft.setPosition(45);
-          glyphRight.setPosition(45);
+          glyphLeft.setPosition(0.1111);
+          glyphRight.setPosition(0.4);
         }
 
-
-        //Relic Code
+        //color sensor arm
+        //jewel lift
+        if(gamepad2.dpad_up) jewelLift.setPower(1);
+        else if(gamepad2.dpad_down) jewelLift.setPower(-1);
+        else jewelLift.setPower(0);
+        //jewel lock
+        if(gamepad2.dpad_left) jewelLock.setPosition(0);
+        if(gamepad2.dpad_right) jewelLock.setPosition(1);
     }
 }

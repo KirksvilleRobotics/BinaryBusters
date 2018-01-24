@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
- * Created by yearbook on 1/5/18.
+ * Created by BinaryBusters on 1/5/18.
  */
 
 @Autonomous(name = "BBSimple")
