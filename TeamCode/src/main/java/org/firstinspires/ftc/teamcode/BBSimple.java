@@ -16,6 +16,6 @@ public class BBSimple extends BinaryBustersAutonomus {
 
         waitForStart();
 
-        encoderDrive(29, 29, 1);
+        encoderDrive(29, 29, 0.5);
     }
 }

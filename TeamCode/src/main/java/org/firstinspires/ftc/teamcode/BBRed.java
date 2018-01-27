@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(name = "BBRed")
 public class BBRed extends BinaryBustersAutonomus {
-    double color;
 
     @Override
     public void runOpMode() {
@@ -21,33 +20,30 @@ public class BBRed extends BinaryBustersAutonomus {
         waitForStart();
 
         dropJewel();
-        color = checkColor();
-        if(color == 1) {
+        if(checkColor()) {
             //color red
             //drive backwards
-            encoderDrive(4.0, 4.0, -1.0);
+            encoderDrive(4.0, 4.0, 0.5);
             telemetry.addData("color: ", "red");
             telemetry.update();
+            sleep(1000);
 
             liftJewel();
 
             //drive to safe zone
-            encoderDrive(28.0 ,28.0, -1.0);
-        } else if(color == 0) {
+            encoderDrive(28.0 ,28.0, 0.5);
+        } else {
             //color blue
             //drive forwards
-            encoderDrive(4.0, 4.0, 1);
+            encoderDrive(4.0, 4.0, 0.5);
             telemetry.addData("color: ", "blue");
             telemetry.update();
+            sleep(1000);
 
             liftJewel();
 
             //drive to safe zone
-            encoderDrive(36.0, 36.0, -1.0);
-        } else {
-            liftJewel();
-
-            encoderDrive(36.0, 36.0, -1.0);
+            encoderDrive(36.0, 36.0, 0.5);
         }
     }
 }

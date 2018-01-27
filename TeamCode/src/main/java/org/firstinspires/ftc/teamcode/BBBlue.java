@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 /**
- * Created by BinaryBusters on 12/4/17.
+ * Created by Elijah Murphy(Doesn't know how to program. He's worthless) on 12/4/17.
  */
+/*Jacob doesn't know how to do anything*/
+/*Heath doesn't how to do anything*/
 @Autonomous(name = "BBBlue")
 public class BBBlue extends BinaryBustersAutonomus {
-    double color;
 
     @Override
     public void runOpMode() {
@@ -19,34 +20,30 @@ public class BBBlue extends BinaryBustersAutonomus {
         telemetry.update();
 
         dropJewel();
-
-        color = checkColor();
-        if(color == 1) {
+        if(checkColor()) {
             //color red
             //drive forwards
-            encoderDrive(4.0, 4.0, 1.0);
+            encoderDrive(4.0, 4.0, 0.5);
             telemetry.addData("color: ", "red");
             telemetry.update();
+            sleep(1000);
 
             liftJewel();
 
             //drive to safe zone
-            encoderDrive(28.0 ,28.0 , 1.0);
-        } else if(color == 0) {
+            encoderDrive(28.0 ,28.0, 0.5);
+        } else {
             //color blue
             //drive backwards
-            encoderDrive(4.0, 4.0, -1.0);
+            encoderDrive(4.0, 4.0, 0.5);
             telemetry.addData("color: ", "blue");
             telemetry.update();
+            sleep(1000);
 
             liftJewel();
 
             //drive to safe zone
-            encoderDrive(36.0, 36.0 , 1.0);
-        } else {
-            liftJewel();
-
-            encoderDrive(32, 32, 1.0);
+            encoderDrive(36.0, 36.0, 0.5);
         }
 
     }

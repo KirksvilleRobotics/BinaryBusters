@@ -28,6 +28,8 @@ public class Septeleop extends OpMode {
 
     public ElapsedTime currentTime = new ElapsedTime();
 
+    double topSpeed = 1.0;
+
     @Override
     public void init() {
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
@@ -47,7 +49,7 @@ public class Septeleop extends OpMode {
         glyphRight = hardwareMap.get(Servo.class, "glyphRight");
 
         jewelLift = hardwareMap.get(DcMotor.class, "jewelLift");
-        jewelLift.setDirection(DcMotor.Direction.FORWARD);
+        jewelLift.setDirection(DcMotor.Direction.REVERSE);
 
         jewelLock = hardwareMap.get(Servo.class, "jewelLock");
     }
@@ -58,14 +60,17 @@ public class Septeleop extends OpMode {
     @Override
     public void loop() {
         //Drive Code
+        if(gamepad1.x) topSpeed = 1.0;
+        if(gamepad2.y) topSpeed = 0.5;
+
         double leftPower;
         double rightPower;
 
         leftPower = -gamepad1.left_stick_y;
         rightPower = gamepad1.right_stick_y;
 
-        backLeftMotor.setPower(leftPower);
-        backRightMotor.setPower(rightPower);
+        backLeftMotor.setPower(leftPower * topSpeed);
+        backRightMotor.setPower(rightPower * topSpeed);
 
         //Glyph code - The mechanism that lifts the glyphs
         //Glyph Vertical
@@ -74,12 +79,12 @@ public class Septeleop extends OpMode {
         //Glyph Horizontal
         if(gamepad2.x) {
           //open
-          glyphLeft.setPosition(0.0);
-          glyphRight.setPosition(0.6);
+          glyphLeft.setPosition(0.1111);
+          glyphRight.setPosition(0.65);
         }
         if(gamepad2.y) {
           //close
-          glyphLeft.setPosition(0.1111);
+          glyphLeft.setPosition(0.3611);
           glyphRight.setPosition(0.4);
         }
 

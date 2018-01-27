@@ -45,7 +45,6 @@ public class BinaryBustersAutonomus extends LinearOpMode{
         leftTarget = backLeftMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
         rightTarget = backRightMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
 
-
         backLeftMotor.setTargetPosition(leftTarget);
         backRightMotor.setTargetPosition(rightTarget);
 
@@ -56,8 +55,16 @@ public class BinaryBustersAutonomus extends LinearOpMode{
         backRightMotor.setPower(speed);
 
         while(backLeftMotor.isBusy() && backRightMotor.isBusy()) {
-            telemetry.addData("Status:", leftTarget);
+            telemetry.addData("Target:", leftTarget);
+            telemetry.addData("Current:", backLeftMotor.getCurrentPosition());
+            telemetry.addData("Left Motor:", backLeftMotor.isBusy());
+            telemetry.addData("Right Motor:" , backRightMotor.isBusy());
             telemetry.update();
+
+            if(!opModeIsActive()) {
+                backLeftMotor.setPower(0);
+                backRightMotor.setPower(0);
+            }
         }
 
         backLeftMotor.setPower(0);
@@ -69,18 +76,29 @@ public class BinaryBustersAutonomus extends LinearOpMode{
 
     }
 
-    public float checkColor() {
+    public boolean checkColor() {
         //check color in front of the robot
-        float hsvValues[] = {0F,0F,0F};
-        Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
-        if(hsvValues[0] > 0 && hsvValues[0] < 15) {
-            //red
-            return 1;
-        } else if(hsvValues[0] > 200) {
-            //blue
-            return 0;
+        //colorSensor.resetDeviceConfigurationForOpMode();
+        //sleep(10);
+        colorSensor.enableLed(true);
+        int red = 0;
+        int timeout = 100;
+        while(red == 0 && timeout != 0) {
+            red = colorSensor.red();
+            timeout--;
         }
-        return -1;
+        int blue = 0;
+        timeout = 100;
+        while(blue == 0 && timeout != 0) {
+            blue = colorSensor.blue();
+            timeout--;
+        }
+
+        colorSensor.enableLed(false);
+        telemetry.addData("Colors seen ->", " red:" + red + " blue:" + blue);
+        //telemetry.addData("Conn info:" + colorSensor.getConnectionInfo(), " to string:" + colorSensor.toString());
+        telemetry.update();
+        return red > blue;
     }
 
     public void dropJewel() {
@@ -88,6 +106,7 @@ public class BinaryBustersAutonomus extends LinearOpMode{
 
         telemetry.addData("Jewel Position:", "down");
         telemetry.update();
+        sleep(1000);
     }
 
     public void liftJewel() {
@@ -98,6 +117,7 @@ public class BinaryBustersAutonomus extends LinearOpMode{
 
         telemetry.addData("Jewel Position:", "up");
         telemetry.update();
+        sleep(1000);
     }
 
     public void setup() {
@@ -114,7 +134,7 @@ public class BinaryBustersAutonomus extends LinearOpMode{
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         jewelLift = hardwareMap.get(DcMotor.class, "jewelLift");
-        jewelLift.setDirection(DcMotor.Direction.FORWARD);
+        jewelLift.setDirection(DcMotor.Direction.REVERSE);
         jewelLock = hardwareMap.get(Servo.class, "jewelLock");
 
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
