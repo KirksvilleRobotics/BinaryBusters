@@ -14,6 +14,15 @@ public class BBSimple extends BinaryBustersAutonomus {
 
         waitForStart();
 
+
+        glyphLeft.setPosition(0.3611);
+        glyphRight.setPosition(0.4);
+
+        sleep(500);
+
         encoderDrive(29, 29, 0.5);
+
+        glyphLeft.setPosition(0.1111);
+        glyphRight.setPosition(0.65);
     }
 }

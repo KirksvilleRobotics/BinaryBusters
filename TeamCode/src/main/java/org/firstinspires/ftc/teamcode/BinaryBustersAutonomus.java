@@ -18,6 +18,9 @@ public class BinaryBustersAutonomus extends LinearOpMode{
     public DcMotor backRightMotor;
     public DcMotor backLeftMotor;
 
+    public Servo glyphLeft;
+    public Servo glyphRight;
+
     public DcMotor jewelLift;
     public Servo jewelLock;
 
@@ -127,6 +130,9 @@ public class BinaryBustersAutonomus extends LinearOpMode{
 
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        glyphLeft = hardwareMap.get(Servo.class, "glyphLeft");
+        glyphRight = hardwareMap.get(Servo.class, "glyphRight");
 
         jewelLift = hardwareMap.get(DcMotor.class, "jewelLift");
         jewelLift.setDirection(DcMotor.Direction.REVERSE);

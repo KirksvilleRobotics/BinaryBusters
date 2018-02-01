@@ -18,6 +18,11 @@ public class BBBlue extends BinaryBustersAutonomus {
         telemetry.addData("Status:", "initiated");
         telemetry.update();
 
+        glyphLeft.setPosition(0.3611);
+        glyphRight.setPosition(0.4);
+
+        sleep(500);
+
         dropJewel();
         if(checkColor()) {
             //color red
@@ -31,6 +36,9 @@ public class BBBlue extends BinaryBustersAutonomus {
 
             //drive to safe zone
             encoderDrive(28.0 ,28.0, 0.5);
+
+            glyphLeft.setPosition(0.1111);
+            glyphRight.setPosition(0.65);
         } else {
             //color blue
             //drive backwards
@@ -43,6 +51,9 @@ public class BBBlue extends BinaryBustersAutonomus {
 
             //drive to safe zone
             encoderDrive(36.0, 36.0, 0.5);
+
+            glyphLeft.setPosition(0.1111);
+            glyphRight.setPosition(0.65);
         }
 
     }
