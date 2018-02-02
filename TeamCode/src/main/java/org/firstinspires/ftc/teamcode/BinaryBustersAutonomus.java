@@ -24,7 +24,7 @@ public class BinaryBustersAutonomus extends LinearOpMode{
     public DcMotor jewelLift;
     public Servo jewelLock;
 
-    public ColorSensor colorSensor;
+    public CustomColor colorSensor;
 
     //Math Variables
     static final double     COUNTS_PER_MOTOR_REV    = 424.918 ;    // eg: TETRIX Motor Encoder
@@ -76,25 +76,13 @@ public class BinaryBustersAutonomus extends LinearOpMode{
 
     public boolean checkColor() {
         //check color in front of the robot
-        //colorSensor.resetDeviceConfigurationForOpMode();
-        //sleep(10);
-        colorSensor.enableLed(true);
-        int red = 0;
-        int timeout = 100;
-        while(red == 0 && timeout != 0) {
-            red = colorSensor.red();
-            timeout--;
-        }
-        int blue = 0;
-        timeout = 100;
-        while(blue == 0 && timeout != 0) {
-            blue = colorSensor.blue();
-            timeout--;
-        }
+        colorSensor.read();
+        sleep(1000);
 
-        colorSensor.enableLed(false);
+        int red = colorSensor.red();
+        int blue = colorSensor.blue();
+
         telemetry.addData("Colors seen ->", " red:" + red + " blue:" + blue);
-        //telemetry.addData("Conn info:" + colorSensor.getConnectionInfo(), " to string:" + colorSensor.toString());
         telemetry.update();
         return red > blue;
     }
@@ -108,9 +96,9 @@ public class BinaryBustersAutonomus extends LinearOpMode{
     }
 
     public void liftJewel() {
-        jewelLift.setPower(1.0);
-        sleep(1000);
         jewelLift.setPower(-1.0);
+        sleep(2000);
+        jewelLift.setPower(0);
         jewelLock.setPosition(1);
 
         telemetry.addData("Jewel Position:", "up");
@@ -138,7 +126,7 @@ public class BinaryBustersAutonomus extends LinearOpMode{
         jewelLift.setDirection(DcMotor.Direction.REVERSE);
         jewelLock = hardwareMap.get(Servo.class, "jewelLock");
 
-        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
-        colorSensor.enableLed(false);
+        colorSensor = new CustomColor(hardwareMap.i2cDeviceSynch.get("colorSensor"));
+        colorSensor.activeMode();
     }
 }

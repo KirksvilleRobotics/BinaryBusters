@@ -22,27 +22,35 @@ public class BBRed extends BinaryBustersAutonomus {
         if(checkColor()) {
             //color red
             //drive backwards
-            encoderDrive(-4.0, -4.0, 0.5);
+            encoderDrive(-3.0, 3.0, 0.5);
             telemetry.addData("color: ", "red");
             telemetry.update();
             sleep(1000);
 
             liftJewel();
+            sleep(1000);
+            encoderDrive(3.0, -3.0, 0.5);
 
             //drive to safe zone
-            encoderDrive(-28.0 ,-28.0, 0.5);
+            encoderDrive(-28.0 ,-28.0, 0.25);
+
+            colorSensor.passiveMode();
         } else {
             //color blue
             //drive forwards
-            encoderDrive(4.0, 4.0, 0.5);
+            encoderDrive(3.0, -3.0, 0.5);
             telemetry.addData("color: ", "blue");
             telemetry.update();
             sleep(1000);
 
             liftJewel();
+            sleep(1000);
+            encoderDrive(-3.0, 3.0, 0.5);
 
             //drive to safe zone
-            encoderDrive(-36.0, -36.0, 0.5);
+            encoderDrive(-36.0, -36.0, 0.25);
+
+            colorSensor.passiveMode();
         }
     }
 }

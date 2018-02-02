@@ -24,5 +24,8 @@ public class BBSimple extends BinaryBustersAutonomus {
 
         glyphLeft.setPosition(0.1111);
         glyphRight.setPosition(0.65);
+
+        colorSensor.passiveMode();
+        encoderDrive(-2, -2, 0.5);
     }
 }
