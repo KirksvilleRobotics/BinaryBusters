@@ -13,15 +13,13 @@ public class BBBlue extends BinaryBustersAutonomus {
     public void runOpMode() {
         setup();
 
-        waitForStart();
+        glyphLeft.setPosition(0.3611);
+        glyphRight.setPosition(0.4);
 
         telemetry.addData("Status:", "initiated");
         telemetry.update();
 
-        glyphLeft.setPosition(0.3611);
-        glyphRight.setPosition(0.4);
-
-        sleep(500);
+        waitForStart();
 
         dropJewel();
         if(checkColor()) {

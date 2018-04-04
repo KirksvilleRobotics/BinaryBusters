@@ -18,6 +18,11 @@ public class BBRed extends BinaryBustersAutonomus {
         telemetry.update();
         waitForStart();
 
+        glyphLeft.setPosition(0.3611);
+        glyphRight.setPosition(0.4);
+
+        sleep(500);
+
         dropJewel();
         if(checkColor()) {
             //color red
