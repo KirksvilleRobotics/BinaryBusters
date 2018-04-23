@@ -19,11 +19,15 @@ public class BBT  extends OpMode {
 
 
     public DcMotor lift;
+    public DcMotor extender;
 
     public Servo flag;
     public Servo pipeDrop;
+    public Servo blockPuller;
 
     public double armPosition = 0.0;
+
+    public boolean flagRaising = false;
 
     @Override
     public void init() {
@@ -43,14 +47,17 @@ public class BBT  extends OpMode {
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
         lift = hardwareMap.get(DcMotor.class, "lift");
+        extender = hardwareMap.get(DcMotor.class, "extender");
 
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        extender.setDirection(DcMotorSimple.Direction.FORWARD);
 
         flag = hardwareMap.get(Servo.class, "flag");
-
         pipeDrop = hardwareMap.get(Servo.class, "pipeDrop");
+        blockPuller = hardwareMap.get(Servo.class, "blockPuller");
     }
 
     @Override
@@ -78,11 +85,23 @@ public class BBT  extends OpMode {
         if(gamepad2.y) pipeDrop.setPosition(180);
 
         //Flag Code
-        if(gamepad2.a) {
+        if(gamepad2.a) flagRaising = true;
+        if(gamepad2.b) flagRaising = false;
+
+        if(flagRaising) {
             //raise flag with 360 servo
             armPosition += 0.5;
             flag.setPosition(armPosition);
         }
-        if(gamepad2.b) flag.setPosition(0.5); //stop raising flag
+        if(!flagRaising) flag.setPosition(0.5); //stop raising flag
+
+        //Block Puller Code
+        //Extend out
+        extender.setPower(gamepad1.left_trigger);
+        //Bring back in
+        extender.setPower(-gamepad1.right_trigger);
+
+        if(gamepad2.right_bumper) blockPuller.setPosition(0);
+        if(gamepad2.left_bumper) blockPuller.setPosition(180);
     }
 }

@@ -20,16 +20,15 @@ public class BBAuto extends LinearOpMode {
     public Servo flag;
     public Servo pipeDrop;
 
-    static final double counts = 425;
-    static final double wheelDiameter = 4;
-    static final double countsPerInch = counts / (wheelDiameter * 3.14);
+    final double counts = 425;
+    final double wheelDiameter = 4;
+    final double countsPerInch = counts / (wheelDiameter * 3.14);
+
+    double armPosition = 0.0;
 
     @Override
     public void runOpMode() {
-
-    }
-
-    public void setUp() {
+        //Set up
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
@@ -60,6 +59,14 @@ public class BBAuto extends LinearOpMode {
         flag = hardwareMap.get(Servo.class, "flag");
 
         pipeDrop = hardwareMap.get(Servo.class, "pipeDrop");
+
+        //Drive left and line up with flag
+        encoderDrive(-38, 38, 38, -38, 1);
+        raiseFlag();
+
+        encoderDrive(38, -38, -38, 38, 1);
+
+        encoderDrive(30, 30, 30, 30, 1);
     }
 
     public void encoderDrive(double frontLeftInches, double frontRightInches, double backLeftInches, double backRightInches, double speed) {
@@ -113,4 +120,14 @@ public class BBAuto extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
+    public void raiseFlag() {
+        double startTime = getRuntime();
+
+        while(getRuntime() - startTime > 20.0) {
+            armPosition += 0.5;
+            flag.setPosition(armPosition);
+        }
+
+        flag.setPosition(0.5);
+    }
 }
